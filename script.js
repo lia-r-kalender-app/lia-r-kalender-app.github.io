@@ -80,7 +80,7 @@ function load() {
 
     if (i > paddingDays) {
       daySquare.appendChild(dayNumber);
-      dayNumber.innerHTML = i - paddingDays + ` <div class="amount_num" id="appointment_amount${i - paddingDays}"></div>`;
+      dayNumber.innerHTML = i - paddingDays + ` <div class="amount_num" id="appointment_amount${month + 1}${i - paddingDays}"></div>`;
       if (i - paddingDays === day && nav === 0) {
         daySquare.classList.add('currentDay');
       }
@@ -188,9 +188,13 @@ function saveEvent() {
 function updateAppointmentAmount() {
   events.forEach(el => {
     let dateString = el.date.split("/")
-    dateString = dateString[1];
-    let item = document.getElementById('appointment_amount' + dateString);
+    let item = document.getElementById('appointment_amount' + dateString[0] + dateString[1]);
 
+    // Falls Termin nicht im aktuellen Monat, setze den Zähler nicht
+    if (item == null) {
+      return;
+    }
+    // Falls Terminzähler leer, setze auf "1" - Ansonsten füge +1 hinzu
     if (!item.innerHTML) {
       item.innerHTML = 1;
     } else {
@@ -237,7 +241,7 @@ function initButtons() {
       closeModal();
     }
   };
-  
+
   document.getElementById('closeButton').addEventListener('click', closeModal);
 }
 
