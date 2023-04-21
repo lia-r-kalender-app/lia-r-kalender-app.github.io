@@ -11,12 +11,9 @@ const eventTitleInput = document.getElementById('eventTitleInput');
 const eventDescriptionInput = document.getElementById('eventDescriptionInput');
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-// Öffnet Modal zum Erstellen eines Termins
+// Macht Modal sichtbar
 function openModal(date) {
   clicked = date;
-
-  // Zugehöriges Event aus Local Storage
-  const eventForDay = events.find(e => e.date === clicked);
 
   // Modal und Backdrop werden sichtbar
   newEventModal.style.display = 'block';
@@ -80,7 +77,7 @@ function load() {
 
     if (i > paddingDays) {
       daySquare.appendChild(dayNumber);
-      dayNumber.innerHTML = i - paddingDays + ` <div class="amount_num" id="appointment_amount${month + 1}${i - paddingDays}"></div>`;
+      dayNumber.innerHTML = i - paddingDays + ` <div class="amount_num" id="appointment_amount${year}${month + 1}${i - paddingDays}"></div>`;
       if (i - paddingDays === day && nav === 0) {
         daySquare.classList.add('currentDay');
       }
@@ -168,8 +165,10 @@ function updateList() {
 
 // Speichert einen neuen Termin ab
 function saveEvent() {
-  if (eventTitleInput.value) {
+  if (eventTitleInput.value && eventDescriptionInput.value) {
     eventTitleInput.classList.remove('error');
+    eventDescriptionInput.classList.remove('error');
+
     events.push({
       date: clicked,
       title: eventTitleInput.value,
@@ -178,7 +177,14 @@ function saveEvent() {
     // Speichert neues Element im Local Storage
     localStorage.setItem('events', JSON.stringify(events));
     closeModal();
-  } else {
+  } else if (!eventTitleInput.value && !eventDescriptionInput.value) {
+    eventTitleInput.classList.add('error');
+    eventDescriptionInput.classList.add('error');
+  } else if (eventTitleInput.value && !eventDescriptionInput.value) {
+    eventTitleInput.classList.remove('error');
+    eventDescriptionInput.classList.add('error');
+  } else if (!eventTitleInput.value && eventDescriptionInput.value) {
+    eventDescriptionInput.classList.remove('error');
     eventTitleInput.classList.add('error');
   }
   updateList();
@@ -188,17 +194,17 @@ function saveEvent() {
 function updateAppointmentAmount() {
   events.forEach(el => {
     let dateString = el.date.split("/")
-    let item = document.getElementById('appointment_amount' + dateString[0] + dateString[1]);
+    let item = document.getElementById('appointment_amount' + dateString[2] + dateString[0] + dateString[1]);
 
     // Falls Termin nicht im aktuellen Monat, setze den Zähler nicht
     if (item == null) {
       return;
     }
     // Falls Terminzähler leer, setze auf "1" - Ansonsten füge +1 hinzu
-    if (!item.innerHTML) {
-      item.innerHTML = 1;
-    } else {
+    if (item.innerHTML) {
       item.innerHTML = parseInt(item.innerHTML) + 1;
+    } else {
+      item.innerHTML = 1;
     }
   });
 }
