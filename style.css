@@ -36,7 +36,7 @@ button {
 }
 
 #header button {
-  background-color: #92a1d1;
+  background-color: #053E4C;
 }
 
 #container {
@@ -76,21 +76,21 @@ button {
 }
 
 .day:hover {
-  background-color: #e8faed;
+  background-color: #c5e1e8;
 }
 
-.day+#currentDay {
-  background-color: #e8f4fa;
+.day.currentDay {
+  background-color: lightyellow;
 }
 
-.day+#currentDay:hover {
-  background-color: #18695a;
+.day.currentDay:hover {
+  background-color: yellow;
 }
 
 .event {
   font-size: 10px;
-  padding: 3px;
-  background-color: #58bae4;
+  padding: 2px 8px;
+  background-color: darkorange;
   color: white;
   border-radius: 5px;
   max-height: 55px;
@@ -130,17 +130,17 @@ button {
 }
 
 .eventInput.error {
-  border: 2px solid red;
+  border: 2px solid crimson;
 }
 
 #cancelButton,
 #deleteButton {
-  background-color: #d36c6c;
+  background-color: crimson;
 }
 
 #saveButton,
 #closeButton {
-  background-color: #92a1d1;
+  background-color: cornflowerblue;
 }
 
 #eventText {
@@ -172,12 +172,12 @@ button {
 
 /* Samstage */
 .day:nth-child(7n-1) {
-  background: grey;
+  background: #96D8E8;
 }
 
 /* Sonntage */
 .day:nth-child(7n) {
-  background: lightgrey;
+  background: #48B5CF;
 }
 
 /* mobile View */
@@ -237,8 +237,43 @@ button {
   }
 }
 
+.amount_num {
+  color: white;
+  background: #053E4C;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: flex;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-small;
+  margin-left: 0.25rem;
+}
+
+.amount_num:empty {
+  background: unset;
+}
+
+.day span {
+  display: flex;
+}
+
 /* List */
 
-.List__date {
-  color: red;
+.heading {
+  font-size: large;
+  font-weight: bold;
+  color: #053E4C;
+}
+
+.description {
+  color: #48B5CF;
+}
+
+.dateItem {
+  padding: 1rem;
+}
+
+.dateItem:nth-child(even) {
+  background-color: lightyellow;
 }
